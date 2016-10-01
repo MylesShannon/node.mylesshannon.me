@@ -3,11 +3,11 @@ var express = require('express'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
-module.exports = function (app, auth) {
+module.exports = (app, auth) => {
   app.use('/api/v1/user', auth, router);
 };
 
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
   User.findById(req.currentUser.id, (err, data) => {
     if(!err) {
       res.json(data.toObject()).status(200);

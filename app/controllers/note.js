@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
     if(!err && data) {
       if(data.length) {
         res.json(
-          data.map(function(d){ return d.toObject() })
+          data.map((d) => { return d.toObject() })
         ).status(200);
       } else {
         res.json([]).status(200);

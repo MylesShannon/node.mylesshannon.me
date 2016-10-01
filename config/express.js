@@ -10,7 +10,7 @@ var express = require('express'),
 
 module.exports = function(app, config) {
   var authMiddleware = (req, res, next) => {
-    if(req.headers.authorization) {
+    if(req.headers.authorization && req.headers.authorization.search('Bearer ') === 0) {
       jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, jwt) => {
         if(!err){
           req.currentUser = { id: jwt.body.sub };
@@ -51,6 +51,11 @@ module.exports = function(app, config) {
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
   app.use(cors(corsConfig));
+
+  var workers = glob.sync(config.root + '/app/workers/*.js');
+  workers.forEach(function (worker) {
+    require(worker)();
+  });
 
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
