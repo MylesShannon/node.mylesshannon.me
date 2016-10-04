@@ -48,7 +48,7 @@ module.exports = () => {
                 if(!err && art.length) {
                   // console.log('article already exists');
                 } else if(!err) {
-                  if(article.description.charAt(0) === '<') {
+                  if(article.description && article.description.charAt(0) === '<') {
                     var desc = "";
                     var parser = new htmlparser.Parser({
                       onopentag: (name, attribs) => {

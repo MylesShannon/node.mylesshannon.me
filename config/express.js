@@ -10,19 +10,24 @@ var express = require('express'),
 
 module.exports = function(app, config) {
   var authMiddleware = (req, res, next) => {
-    if(req.headers.authorization && req.headers.authorization.search('Bearer ') === 0) {
-      jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, jwt) => {
+    var validateToken = (token, split) => {
+      jwt.verify(token.split(split)[1], process.env.JWT_SECRET, (err, jwt) => {
         if(!err){
           req.currentUser = { id: jwt.body.sub };
           next();
         } else if(jwt.body.exp < Date.now() / 1000) {
-          res.json({ msg: 'Token has expired', status: 403 }).status(403);
+          res.status(403).json({ msg: 'Token has expired', status: 403 });
         } else {
-          res.json({ msg: 'Error validating token', status: 500 }).status(500);
+          res.status(500).json({ msg: 'Error validating token', status: 500 });
         }
       })
+    }
+    if( req.headers.authorization && req.headers.authorization.search('Bearer ') === 0 ) {
+      validateToken(req.headers.authorization, ' ');
+    } else if(req.headers.cookie && req.headers.cookie.search('token=') === 0) {
+      validateToken(req.headers.cookie, '=');
     } else {
-      res.json({ msg: 'authorization denied', status: 403 }).status(403);
+      res.status(403).json({ msg: 'authorization denied', status: 403 });
     }
   };
 

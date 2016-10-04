@@ -35,7 +35,13 @@ router.post('/google', (req, res, next) => {
           User.findOne({'uid': resp.id}, (err, data) => {
             if(!err && data) {
               // return token for existing user
-              res.json({'token': encodeJWT(data.id)}).status(200);
+              User.count({}, (err, total) => {
+                if(!err) {
+                  res.json({'token': encodeJWT(data.id), 'user': Object.assign({}, data.toObject(), {total: total}) }).status(200);
+                } else {
+                  res.status(500).json({ msg: 'Failed to get user count', status: 500 });
+                }
+              })
             } else if(!data || err) {
               // create new user
               var newUser = new User({
@@ -51,7 +57,13 @@ router.post('/google', (req, res, next) => {
               });
               newUser.save((err) => {
                 if (!err) {
-                  res.json({'token': encodeJWT(newUser.id)}).status(200);
+                  User.count({}, (err, total) => {
+                    if(!err) {
+                      res.json({'token': encodeJWT(newUser.id), 'user': Object.assign({}, newUser.toObject(), {total: total}) }).status(200);
+                    } else {
+                      res.status(500).json({ msg: 'Failed to get user count', status: 500 });
+                    }
+                  })
                 } else {
                   res.json({ msg: 'Failed to create new user', status: 500 }).status(500);
                 }

@@ -9,16 +9,17 @@ module.exports = (app, auth) => {
 }
 
 router.get('/', (req, res, next) => {
-  var timestamp = new Date(Date.now() - 1 * 60 * 60 * 1000);
-  var hexSeconds = Math.floor(timestamp/1000).toString(16);
+  // var timestamp = new Date(Date.now() - 1 * 60 * 60 * 1000);
+  // var hexSeconds = Math.floor(timestamp/1000).toString(16);
 
-  Article.find({ "_id": { "$gt" : ObjectID(hexSeconds + "0000000000000000") } }).sort('published').populate('_feed').exec((err, articles) => {
+  // Article.find({ "_id": { "$gt" : ObjectID(hexSeconds + "0000000000000000") } }).sort('published').populate('_feed').exec((err, articles) => {
+  //   res.json(
+  //     articles.map((a) => { return a.toObject() })
+  //   ).status(200);
+  // });
+  Article.find({}).limit(100).sort('published').populate('_feed').exec((err, articles) => {
     res.json(
       articles.map((a) => { return a.toObject() })
     ).status(200);
   });
-});
-
-router.put('/:articleId', (req, res, next) => {
-  // Update article attributes
 });
