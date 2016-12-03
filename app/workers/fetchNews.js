@@ -36,11 +36,15 @@ module.exports = () => {
   };
 
   var getNewsFeeds = () => {
-    console.log('get news');
     Feed.find({}, (err, feeds) => {
       if(err) {
         // console.log(err);
       } else {
+        var feedNames = [];
+        feeds.forEach((feed) => {
+          feedNames.push(feed.name);
+        });
+        console.log('GET NEWS: '+feedNames.join(', '));
         feeds.forEach((feed) => {
           var saveArticlesCallback = (articles) => {
             articles.forEach((article) => {
@@ -84,5 +88,5 @@ module.exports = () => {
     });
   }
   getNewsFeeds();
-  setInterval(getNewsFeeds, 300000);
+  setInterval(getNewsFeeds, 6000000);
 }

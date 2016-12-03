@@ -54,7 +54,7 @@ module.exports = () => {
   };
 
   var getBills = (source) => {
-    console.log('GET BILLS FROM: ', source.title);
+    console.log('GET BILLS FROM: '+source.title);
     request.get(source.url, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         saveBills(JSON.parse(body).objects);
@@ -69,5 +69,5 @@ module.exports = () => {
   }
 
   getBills(source);
-  setInterval(() => { getBills(source) }, 600000);
+  setInterval(() => { getBills(source) }, 6000000);
 }

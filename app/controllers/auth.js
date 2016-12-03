@@ -39,7 +39,7 @@ router.post('/google', (req, res, next) => {
                 if(!err) {
                   res.json({'token': encodeJWT(data.id), 'user': Object.assign({}, data.toObject(), {total: total}) }).status(200);
                 } else {
-                  res.status(500).json({ msg: 'Failed to get user count', status: 500 });
+                  res.json({ msg: 'Failed to get user count', status: 500 }).status(500);
                 }
               })
             } else if(!data || err) {
@@ -61,7 +61,7 @@ router.post('/google', (req, res, next) => {
                     if(!err) {
                       res.json({'token': encodeJWT(newUser.id), 'user': Object.assign({}, newUser.toObject(), {total: total}) }).status(200);
                     } else {
-                      res.status(500).json({ msg: 'Failed to get user count', status: 500 });
+                      res.json({ msg: 'Failed to get user count', status: 500 }).status(500);
                     }
                   })
                 } else {

@@ -9,9 +9,9 @@ module.exports = (app) => {
 }
 
 router.get('/', (req, res, next) => {
-  Bill.find({}).limit(25).sort('introduced_date').populate('_text').exec((err, bills) => {
-    res.status(200).json(
-      bills.map((b) => { return b.toObject() })
-    );
+  Bill.find({}).limit(25).sort('-introduced_date').populate('_text').exec((err, bills) => {
+    res.json(
+      {'bills': bills.map((b) => { return b.toObject() }) }
+    ).status(200);
   });
 });

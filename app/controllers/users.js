@@ -10,9 +10,9 @@ module.exports = (app) => {
 router.get('/total', (req, res, next) => {
   User.count({}, (err, total) => {
     if(!err) {
-      res.status(200).json(total);
+      res.json(total).status(200);
     } else {
-      res.status(500).json({ msg: 'Failed to get user count', status: 500 });
+      res.json({ msg: 'Failed to get user count', status: 500 }).status(500);
     }
   })
 });
@@ -22,7 +22,7 @@ router.get('/:userId', (req, res, next) => {
     if(!err) {
       res.json(user.toObject()).state(200);
     } else {
-      res.status(500).json({ msg: 'Failed to get user data', status: 500 });
+      res.json({ msg: 'Failed to get user data', status: 500 }).status(500);
     }
   })
 });
