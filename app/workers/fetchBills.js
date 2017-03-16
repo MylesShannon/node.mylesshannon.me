@@ -54,7 +54,7 @@ module.exports = () => {
   };
 
   var getBills = (source) => {
-    console.log('GET BILLS FROM: '+source.title);
+    console.log('Getting bills from: '+source.title);
     request.get(source.url, (error, response, body) => {
       if (!error && response.statusCode == 200) {
         saveBills(JSON.parse(body).objects);

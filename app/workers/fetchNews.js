@@ -37,14 +37,15 @@ module.exports = () => {
 
   var getNewsFeeds = () => {
     Feed.find({}, (err, feeds) => {
-      if(err) {
-        // console.log(err);
-      } else {
+      if(!err) {
+        if(feeds.length <= 0) {
+          throw new Error('No feeds found!');
+        }
         var feedNames = [];
         feeds.forEach((feed) => {
           feedNames.push(feed.name);
         });
-        console.log('GET NEWS: '+feedNames.join(', '));
+        console.log('Getting news from: '+feedNames.join(', '));
         feeds.forEach((feed) => {
           var saveArticlesCallback = (articles) => {
             articles.forEach((article) => {
