@@ -28,9 +28,9 @@ var config = {
     app: {
       name: 'node-mylesshannon-me'
     },
-    port: process.env.PORT || 442,
+    port: process.env.PORT || 80,
     db: 'mongodb://localhost/node-mylesshannon-me-production',
-    cors: 'http://localhost:8080'
+    cors: ['https://jot.mylesshannon.me', 'https://directd.mylesshannon.me', 'https://mylesshannon.me']
   }
 };
 
