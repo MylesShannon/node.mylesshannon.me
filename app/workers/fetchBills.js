@@ -36,10 +36,10 @@ module.exports = () => {
 
   var saveBills = (bills) => {
     bills.forEach((bill) => {
-      Bill.find({id: bill.id}, (err, doc) => {
-        if(!err && doc.length) {
+      Bill.find({congress: bill.congress, number: bill.number}, (err, doc) => {
+        if(!err && doc.length >= 1) {
           // console.log('bill already exists');
-        } else if(!err) {
+        } else if(!err && doc.length == 0) {
           new Bill( Object.assign({}, {data_source_link: source.link, data_source_title: source.title}, bill) ).save((err, doc) => {
             if(err) {
               // console.log('error saving new bill');

@@ -16,7 +16,6 @@ var billSchema = new Schema({
   "data_source_link": { type: String, default: '' },
   "display_number": { type: String, default: '' },
   "docs_house_gov_postdate": { type: Date },
-  "id": { type: Number, unique: true },
   "introduced_date": { type: Date },
   "is_alive": { type: Boolean },
   "is_current": { type: Boolean },
@@ -55,7 +54,7 @@ var billSchema = new Schema({
   //  ]
   // ]
   "noun": { type: String, default: '' },
-  "number": { type: Number },
+  "number": { type: Number, unique: true, index: true },
   "related_bills": { type: Array },//[
   //  {
   //   "bill": 251203,
