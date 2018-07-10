@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
   //     articles.map((a) => { return a.toObject() })
   //   ).status(200);
   // });
-  Article.find({}).limit(100).sort('published').populate('_feed').exec((err, articles) => {
+  Article.find({}).limit(50).sort({'published': -1}).populate('_feed').exec((err, articles) => {
     res.json(
       articles.map((a) => { return a.toObject() })
     ).status(200);
