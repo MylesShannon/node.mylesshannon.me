@@ -6,8 +6,7 @@ var express = require('express'),
 
 var google = require('googleapis'),
   gPlus = google.plus('v1'),
-  OAuth2 = google.auth.OAuth2,
-  oauth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_URI_REDIRECT);
+  OAuth2 = google.auth.OAuth2;
 
 var encodeJWT = (userId) => {
   var claims = {
@@ -26,6 +25,7 @@ module.exports = (app) => {
 }
 
 router.post('/google', (req, res, next) => {
+  var oauth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, req.body.redirectUri);
   oauth2Client.getToken(req.body.code, (err, tokens) => {
     if(!err) {
       oauth2Client.setCredentials(tokens);
