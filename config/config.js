@@ -30,7 +30,7 @@ var config = {
     },
     port: process.env.PORT || 80,
     db: 'mongodb://localhost/node-mylesshannon-me-production',
-    cors: ['https://jot.mylesshannon.me', 'https://directd.mylesshannon.me', 'https://mylesshannon.me']
+    cors: ['https://jot.mylesshannon.me', 'https://directd.mylesshannon.me', 'https://news.mylesshannon.me', 'https://mylesshannon.me']
   }
 };
 
