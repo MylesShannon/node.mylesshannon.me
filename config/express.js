@@ -10,8 +10,8 @@ var express = require('express'),
 
 module.exports = function(app, config) {
   var authMiddleware = (req, res, next) => {
-    var validateToken = (token, split) => {
-      jwt.verify(token.split(split)[1], process.env.JWT_SECRET, (err, jwt) => {
+    var validateToken = (token) => {
+      jwt.verify(token, process.env.JWT_SECRET, (err, jwt) => {
         if(!err){
           req.currentUser = { id: jwt.body.sub };
           next();
@@ -22,10 +22,10 @@ module.exports = function(app, config) {
         }
       })
     }
-    if( req.headers.authorization && req.headers.authorization.search('Bearer ') === 0 ) {
-      validateToken(req.headers.authorization, ' ');
-    } else if(req.headers.cookie && req.headers.cookie.search('token=') === 0) {
-      validateToken(req.headers.cookie, '=');
+    if(req.headers.authorization && req.headers.authorization.search('Bearer ') === 0 ) {
+      validateToken(req.headers.authorization.split(' ')[1]);
+    } else if(req.cookies.token) {
+      validateToken(req.cookies.token);
     } else {
       res.status(403).json({ msg: 'authorization denied', status: 403 });
     }
