@@ -38,7 +38,7 @@ var connectWithRetry = function() {
       startExpress();
     } else {
       console.log("Mongodb not found, running mongod...");
-      exec('mongod --dbpath=/data --port 27017');
+      exec('mongod --dbpath=/data --port 27017 --nojournal');
       setTimeout(connectWithRetry, 2500);
     }
   });
