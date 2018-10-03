@@ -12,6 +12,7 @@ var userSchema = new Schema({
   profile_picture: { type: String, default: '' },
   access_token: { type: String, default: '' },
   _votes_by_bill: [{type: Schema.Types.ObjectId, ref: 'Bill', index: { unique: true } }],
+  _crafts_by_id: [{type: Schema.Types.ObjectId, ref: 'Craft', index: { unique: true } }],
 },
 {
   timestamps: true,

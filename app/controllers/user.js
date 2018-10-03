@@ -9,7 +9,7 @@ module.exports = (app, auth) => {
 };
 
 router.get('/', (req, res, next) => {
-  User.findById(req.currentUser.id, (err, data) => {
+  User.findById(req.currentUser.id).populate('_crafts_by_id').exec((err, data) => {
     if(!err) {
       res.json(data.toObject()).status(200);
     } else {
