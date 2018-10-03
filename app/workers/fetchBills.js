@@ -69,5 +69,6 @@ module.exports = () => {
   }
 
   getBills(source);
-  setInterval(() => { getBills(source) }, 6000000);
+  // fetch every 3 days
+  setInterval(() => { getBills(source) }, 259200000);
 }

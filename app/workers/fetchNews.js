@@ -89,5 +89,6 @@ module.exports = () => {
     });
   }
   getNewsFeeds();
-  setInterval(getNewsFeeds, 6000000);
+  // fetch every 3 days
+  setInterval(getNewsFeeds, 259200000);
 }
